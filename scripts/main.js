@@ -8,6 +8,8 @@ document.addEventListener('DOMContentLoaded', function() {
     gsap.set('.nav-container', { y: -50, opacity: 0 });
     gsap.set('.logo-svg', { opacity: 0 });
     gsap.set('.nav-item', { y: 20, opacity: 0 });
+    gsap.set('.hamburger', { opacity: 0 });
+    gsap.set('.mobile-menu-overlay', { opacity: 0, pointerEvents: 'none' });
     
     function initAnimations() {
         const tl = gsap.timeline();
@@ -29,11 +31,16 @@ document.addEventListener('DOMContentLoaded', function() {
             opacity: 1,
             duration: 0.3,
             ease: 'power2.out'
-        }, '-=0.7');
+        }, '-=0.7')
+        .to('.hamburger', {
+            opacity: 1,
+            duration: 0.3,
+            ease: 'power2.out'
+        }, '-=0.5');
     }
     
     function setupRollingTextAnimations() {
-        const navItems = document.querySelectorAll('.nav-item');
+        const navItems = document.querySelectorAll('.nav-item, .mobile-nav-item');
         
         navItems.forEach(item => {
             const rollingText = item.querySelector('.rolling-text');
@@ -92,6 +99,68 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
+    function setupMobileMenu() {
+        const hamburger = document.querySelector('.hamburger');
+        const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+        const body = document.body;
+        let isMenuOpen = false;
+        
+        hamburger.addEventListener('click', () => {
+            isMenuOpen = !isMenuOpen;
+            hamburger.classList.toggle('active');
+            
+            if (isMenuOpen) {
+                // Open menu
+                body.style.overflow = 'hidden';
+                gsap.to(mobileMenuOverlay, {
+                    opacity: 1,
+                    pointerEvents: 'all',
+                    duration: 0.4,
+                    ease: 'power2.out'
+                });
+                
+                // Animate menu items
+                gsap.fromTo('.mobile-nav-item', {
+                    y: 30,
+                    opacity: 0
+                }, {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.6,
+                    stagger: 0.1,
+                    ease: 'power2.out',
+                    delay: 0.2
+                });
+            } else {
+                // Close menu
+                body.style.overflow = '';
+                gsap.to(mobileMenuOverlay, {
+                    opacity: 0,
+                    pointerEvents: 'none',
+                    duration: 0.3,
+                    ease: 'power2.in'
+                });
+            }
+        });
+        
+        // Close menu when clicking on a link
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                isMenuOpen = false;
+                hamburger.classList.remove('active');
+                body.style.overflow = '';
+                gsap.to(mobileMenuOverlay, {
+                    opacity: 0,
+                    pointerEvents: 'none',
+                    duration: 0.3,
+                    ease: 'power2.in'
+                });
+            });
+        });
+    }
+    
     initAnimations();
     setupRollingTextAnimations();
+    setupMobileMenu();
 });
