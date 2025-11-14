@@ -5,38 +5,95 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
     
+    // Hide navbar initially
+    gsap.set('.navbar', { opacity: 0 });
     gsap.set('.nav-container', { y: -50, opacity: 0 });
     gsap.set('.logo-svg', { opacity: 0 });
     gsap.set('.nav-item', { y: 20, opacity: 0 });
     gsap.set('.hamburger', { opacity: 0 });
-    gsap.set('.mobile-menu-overlay', { opacity: 0, pointerEvents: 'none' });
+    gsap.set('.mobile-menu-overlay', { y: '-100%', pointerEvents: 'none' });
+    
+    // Loader animation
+    function initLoader() {
+        const letters = document.querySelectorAll('.loader-letter');
+        const isMobile = window.innerWidth <= 768;
+        
+        const loaderTl = gsap.timeline({
+            onComplete: () => {
+                // Grid dissolve - each cell slides down or right
+                gsap.to('.loader-letter', {
+                    x: isMobile ? '100%' : '0%',
+                    y: isMobile ? '0%' : '100%',
+                    duration: 0.7,
+                    stagger: {
+                        each: 0.08,
+                        from: 'start'
+                    },
+                    ease: 'power3.inOut',
+                    onComplete: () => {
+                        document.querySelector('.loader').style.display = 'none';
+                        initAnimations();
+                    }
+                });
+            }
+        });
+        
+        // Grid reveal - letters slide in
+        loaderTl.to('.loader-letter', {
+            x: isMobile ? '0%' : '0%',
+            y: isMobile ? '0%' : '0%',
+            duration: 0.8,
+            stagger: {
+                each: 0.1,
+                from: 'start'
+            },
+            ease: 'power3.out'
+        })
+        // Fade in letters
+        .to('.loader-letter', {
+            opacity: 1,
+            duration: 0.6,
+            stagger: {
+                each: 0.08,
+                from: 'start'
+            },
+            ease: 'power2.out'
+        }, '-=0.6')
+        // Hold
+        .to({}, { duration: 0.8 });
+    }
     
     function initAnimations() {
         const tl = gsap.timeline();
         
-        tl.to('.nav-container', {
+        tl.to('.navbar', {
+            opacity: 1,
+            duration: 0.2,
+            ease: 'power2.out'
+        })
+        .to('.logo-svg', {
+            opacity: 1,
+            duration: 0.4,
+            ease: 'power2.out'
+        }, '-=0.1')
+        .to('.nav-container', {
             y: 0,
             opacity: 1,
-            duration: 0.8,
+            duration: 0.6,
             ease: 'power3.out'
-        })
+        }, '-=0.2')
         .to('.nav-item', {
             y: 0,
             opacity: 1,
-            duration: 0.5,
-            stagger: 0.1,
+            duration: 0.4,
+            stagger: 0.08,
             ease: 'power2.out'
         }, '-=0.3')
-        .to('.logo-svg', {
-            opacity: 1,
-            duration: 0.3,
-            ease: 'power2.out'
-        }, '-=0.7')
         .to('.hamburger', {
             opacity: 1,
             duration: 0.3,
             ease: 'power2.out'
-        }, '-=0.5');
+        }, '-=0.4');
     }
     
     function setupRollingTextAnimations() {
@@ -111,16 +168,16 @@ document.addEventListener('DOMContentLoaded', function() {
             hamburger.classList.toggle('active');
             
             if (isMenuOpen) {
-                // Open menu
+                // Open menu - slide down from top
                 body.style.overflow = 'hidden';
                 gsap.to(mobileMenuOverlay, {
-                    opacity: 1,
+                    y: '0%',
                     pointerEvents: 'all',
-                    duration: 0.4,
-                    ease: 'power2.out'
+                    duration: 0.6,
+                    ease: 'power3.inOut'
                 });
                 
-                // Animate menu items
+                // Animate menu items after overlay starts sliding in
                 gsap.fromTo('.mobile-nav-item', {
                     y: 30,
                     opacity: 0
@@ -130,16 +187,28 @@ document.addEventListener('DOMContentLoaded', function() {
                     duration: 0.6,
                     stagger: 0.1,
                     ease: 'power2.out',
-                    delay: 0.2
+                    delay: 0.3
                 });
             } else {
-                // Close menu
+                // Close menu - slide up
                 body.style.overflow = '';
-                gsap.to(mobileMenuOverlay, {
+                
+                // Fade out items first
+                gsap.to('.mobile-nav-item', {
+                    y: -20,
                     opacity: 0,
-                    pointerEvents: 'none',
                     duration: 0.3,
+                    stagger: 0.05,
                     ease: 'power2.in'
+                });
+                
+                // Then slide overlay up
+                gsap.to(mobileMenuOverlay, {
+                    y: '-100%',
+                    pointerEvents: 'none',
+                    duration: 0.6,
+                    ease: 'power3.inOut',
+                    delay: 0.2
                 });
             }
         });
@@ -150,17 +219,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 isMenuOpen = false;
                 hamburger.classList.remove('active');
                 body.style.overflow = '';
-                gsap.to(mobileMenuOverlay, {
+                
+                gsap.to('.mobile-nav-item', {
+                    y: -20,
                     opacity: 0,
-                    pointerEvents: 'none',
                     duration: 0.3,
+                    stagger: 0.05,
                     ease: 'power2.in'
+                });
+                
+                gsap.to(mobileMenuOverlay, {
+                    y: '-100%',
+                    pointerEvents: 'none',
+                    duration: 0.6,
+                    ease: 'power3.inOut',
+                    delay: 0.2
                 });
             });
         });
     }
     
-    initAnimations();
+    initLoader();
     setupRollingTextAnimations();
     setupMobileMenu();
 });
