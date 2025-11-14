@@ -119,12 +119,14 @@ document.addEventListener('DOMContentLoaded', function() {
             originalSpan.style.display = 'block';
             originalSpan.style.height = '1.2em';
             originalSpan.style.lineHeight = '1.2em';
+            originalSpan.style.color = 'inherit';
             
             const duplicateSpan = document.createElement('span');
             duplicateSpan.textContent = text;
             duplicateSpan.style.display = 'block';
             duplicateSpan.style.height = '1.2em';
             duplicateSpan.style.lineHeight = '1.2em';
+            duplicateSpan.style.color = 'inherit';
             
             rollingContent.append(originalSpan, duplicateSpan);
             rollingContainer.appendChild(rollingContent);
@@ -160,6 +162,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const hamburger = document.querySelector('.hamburger');
         const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay');
         const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+        const navbar = document.querySelector('.navbar');
         const body = document.body;
         let isMenuOpen = false;
         
@@ -169,7 +172,9 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if (isMenuOpen) {
                 // Open menu - slide down from top
-                body.style.overflow = 'hidden';
+                body.classList.add('menu-open');
+                
+                navbar.classList.add('menu-open');
                 gsap.to(mobileMenuOverlay, {
                     y: '0%',
                     pointerEvents: 'all',
@@ -191,7 +196,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             } else {
                 // Close menu - slide up
-                body.style.overflow = '';
+                body.classList.remove('menu-open');
+                
+                navbar.classList.remove('menu-open');
                 
                 // Fade out items first
                 gsap.to('.mobile-nav-item', {
@@ -218,7 +225,8 @@ document.addEventListener('DOMContentLoaded', function() {
             link.addEventListener('click', () => {
                 isMenuOpen = false;
                 hamburger.classList.remove('active');
-                body.style.overflow = '';
+                navbar.classList.remove('menu-open');
+                body.classList.remove('menu-open');
                 
                 gsap.to('.mobile-nav-item', {
                     y: -20,
@@ -239,7 +247,99 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
+    function initScrollAnimations() {
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Change navbar color when scrolling over white content
+        ScrollTrigger.create({
+            trigger: '.content-wrapper',
+            start: 'top 100px',
+            end: 'bottom top',
+            onEnter: () => document.querySelector('.navbar').classList.add('dark'),
+            onLeave: () => document.querySelector('.navbar').classList.remove('dark'),
+            onEnterBack: () => document.querySelector('.navbar').classList.add('dark'),
+            onLeaveBack: () => document.querySelector('.navbar').classList.remove('dark')
+        });
+        
+        // Animate hero section
+        gsap.from('.hero-title', {
+            scrollTrigger: {
+                trigger: '.hero-section',
+                start: 'top 80%',
+                end: 'bottom 20%',
+                toggleActions: 'play none none reverse'
+            },
+            y: 50,
+            opacity: 0,
+            duration: 1,
+            ease: 'power3.out'
+        });
+        
+        gsap.from('.hero-subtitle', {
+            scrollTrigger: {
+                trigger: '.hero-section',
+                start: 'top 80%',
+                end: 'bottom 20%',
+                toggleActions: 'play none none reverse'
+            },
+            y: 30,
+            opacity: 0,
+            duration: 1,
+            delay: 0.2,
+            ease: 'power3.out'
+        });
+        
+        // Animate section titles
+        gsap.utils.toArray('.section-title').forEach((title) => {
+            gsap.from(title, {
+                scrollTrigger: {
+                    trigger: title,
+                    start: 'top 85%',
+                    toggleActions: 'play none none reverse'
+                },
+                y: 40,
+                opacity: 0,
+                duration: 0.8,
+                ease: 'power2.out'
+            });
+        });
+        
+        // Animate project cards
+        gsap.utils.toArray('.project-card').forEach((card, index) => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top 90%',
+                    toggleActions: 'play none none reverse'
+                },
+                y: 50,
+                opacity: 0,
+                duration: 0.8,
+                delay: index * 0.1,
+                ease: 'power2.out'
+            });
+        });
+        
+        // Animate about text
+        gsap.from('.about-text', {
+            scrollTrigger: {
+                trigger: '.about-section',
+                start: 'top 80%',
+                toggleActions: 'play none none reverse'
+            },
+            y: 40,
+            opacity: 0,
+            duration: 1,
+            ease: 'power2.out'
+        });
+    }
+    
     initLoader();
     setupRollingTextAnimations();
     setupMobileMenu();
+    
+    // Initialize scroll animations after a short delay to ensure DOM is ready
+    setTimeout(() => {
+        initScrollAnimations();
+    }, 100);
 });
