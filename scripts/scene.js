@@ -27,16 +27,12 @@ function initThreeJS() {
     
     // Create green cube
     const geometry = new THREE.BoxGeometry(2, 2, 2);
-    const material = new THREE.MeshBasicMaterial({ 
-        color: 0x00ff00,
-        wireframe: false
-    });
+    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
     cube = new THREE.Mesh(geometry, material);
     scene.add(cube);
     
     // Add lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-    scene.add(ambientLight);
+    scene.add(new THREE.AmbientLight(0xffffff, 0.5));
     
     const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
     directionalLight.position.set(5, 5, 5);

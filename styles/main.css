@@ -157,12 +157,9 @@ html {
     align-items: center;
     padding: 36px 36px 0;
     z-index: 1000;
-    opacity: 1;
-    transform: translateY(0);
-    transition: all 0.3s ease;
+    transition: opacity 0.3s ease;
 }
 
-/* Navbar colors - white by default (over Three.js) */
 .navbar .logo-svg {
     filter: brightness(0) invert(1);
     transition: filter 0.3s ease;
@@ -176,11 +173,10 @@ html {
 
 .navbar .hamburger-line {
     background-color: #fff;
-    transition: background-color 0.3s ease;
 }
 
-/* Dark navbar (over white content) */
-.navbar.dark .logo-svg {
+.navbar.dark .logo-svg,
+.navbar.menu-open .logo-svg {
     filter: brightness(0) invert(0);
 }
 
@@ -189,37 +185,21 @@ html {
     color: #000 !important;
 }
 
-.navbar.dark .hamburger-line {
-    background-color: #000;
-}
-
-/* Menu open state - force white navbar */
-.navbar.menu-open .logo-svg {
-    filter: brightness(0) invert(0);
-}
-
+.navbar.dark .hamburger-line,
 .navbar.menu-open .hamburger-line {
     background-color: #000;
 }
 
 .logo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     width: 32px;
     height: 32px;
 }
 
-.logo-link {
+.logo-link,
+.logo-svg {
     display: block;
     width: 100%;
     height: 100%;
-}
-
-.logo-svg {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
 }
 
 .nav-container {
@@ -251,19 +231,16 @@ html {
 }
 
 .rolling-text {
-    position: relative;
     display: inline-block;
 }
 
 .rolling-container {
     overflow: hidden;
     height: 1.2em;
-    position: relative;
 }
 
 .rolling-content {
-    position: relative;
-    transform: translateY(0%);
+    transform: translateY(0);
 }
 
 .nav-item:hover .nav-link {
@@ -289,7 +266,6 @@ html {
     width: 100%;
     height: 3px;
     transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease;
-    transform-origin: center;
     border-radius: 2px;
 }
 

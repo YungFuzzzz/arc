@@ -7,10 +7,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Hide navbar initially
     gsap.set('.navbar', { opacity: 0 });
-    gsap.set('.nav-container', { y: -50, opacity: 0 });
-    gsap.set('.logo-svg', { opacity: 0 });
-    gsap.set('.nav-item', { y: 20, opacity: 0 });
-    gsap.set('.hamburger', { opacity: 0 });
+    gsap.set(['.nav-container', '.logo-svg', '.nav-item', '.hamburger'], { opacity: 0 });
+    gsap.set('.nav-container', { y: -50 });
+    gsap.set('.nav-item', { y: 20 });
     gsap.set('.mobile-menu-overlay', { y: '-100%', pointerEvents: 'none' });
     
     // Loader animation
@@ -105,28 +104,19 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const rollingContainer = document.createElement('div');
             rollingContainer.className = 'rolling-container';
-            rollingContainer.style.overflow = 'hidden';
-            rollingContainer.style.height = '1.2em';
-            rollingContainer.style.position = 'relative';
             
             const rollingContent = document.createElement('div');
             rollingContent.className = 'rolling-content';
-            rollingContent.style.position = 'relative';
-            rollingContent.style.transform = 'translateY(0%)';
             
-            const originalSpan = document.createElement('span');
-            originalSpan.textContent = text;
-            originalSpan.style.display = 'block';
-            originalSpan.style.height = '1.2em';
-            originalSpan.style.lineHeight = '1.2em';
-            originalSpan.style.color = 'inherit';
+            const createSpan = () => {
+                const span = document.createElement('span');
+                span.textContent = text;
+                span.style.cssText = 'display:block;height:1.2em;line-height:1.2em;color:inherit';
+                return span;
+            };
             
-            const duplicateSpan = document.createElement('span');
-            duplicateSpan.textContent = text;
-            duplicateSpan.style.display = 'block';
-            duplicateSpan.style.height = '1.2em';
-            duplicateSpan.style.lineHeight = '1.2em';
-            duplicateSpan.style.color = 'inherit';
+            const originalSpan = createSpan();
+            const duplicateSpan = createSpan();
             
             rollingContent.append(originalSpan, duplicateSpan);
             rollingContainer.appendChild(rollingContent);
@@ -166,6 +156,29 @@ document.addEventListener('DOMContentLoaded', function() {
         const body = document.body;
         let isMenuOpen = false;
         
+        const closeMenu = () => {
+            isMenuOpen = false;
+            hamburger.classList.remove('active');
+            navbar.classList.remove('menu-open');
+            body.classList.remove('menu-open');
+            
+            gsap.to('.mobile-nav-item', {
+                y: -20,
+                opacity: 0,
+                duration: 0.3,
+                stagger: 0.05,
+                ease: 'power2.in'
+            });
+            
+            gsap.to(mobileMenuOverlay, {
+                y: '-100%',
+                pointerEvents: 'none',
+                duration: 0.6,
+                ease: 'power3.inOut',
+                delay: 0.2
+            });
+        };
+        
         hamburger.addEventListener('click', () => {
             isMenuOpen = !isMenuOpen;
             hamburger.classList.toggle('active');
@@ -195,70 +208,30 @@ document.addEventListener('DOMContentLoaded', function() {
                     delay: 0.3
                 });
             } else {
-                // Close menu - slide up
-                body.classList.remove('menu-open');
-                
-                navbar.classList.remove('menu-open');
-                
-                // Fade out items first
-                gsap.to('.mobile-nav-item', {
-                    y: -20,
-                    opacity: 0,
-                    duration: 0.3,
-                    stagger: 0.05,
-                    ease: 'power2.in'
-                });
-                
-                // Then slide overlay up
-                gsap.to(mobileMenuOverlay, {
-                    y: '-100%',
-                    pointerEvents: 'none',
-                    duration: 0.6,
-                    ease: 'power3.inOut',
-                    delay: 0.2
-                });
+                closeMenu();
             }
         });
         
         // Close menu when clicking on a link
         mobileNavLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                isMenuOpen = false;
-                hamburger.classList.remove('active');
-                navbar.classList.remove('menu-open');
-                body.classList.remove('menu-open');
-                
-                gsap.to('.mobile-nav-item', {
-                    y: -20,
-                    opacity: 0,
-                    duration: 0.3,
-                    stagger: 0.05,
-                    ease: 'power2.in'
-                });
-                
-                gsap.to(mobileMenuOverlay, {
-                    y: '-100%',
-                    pointerEvents: 'none',
-                    duration: 0.6,
-                    ease: 'power3.inOut',
-                    delay: 0.2
-                });
-            });
+            link.addEventListener('click', closeMenu);
         });
     }
     
     function initScrollAnimations() {
         gsap.registerPlugin(ScrollTrigger);
         
+        const navbar = document.querySelector('.navbar');
+        
         // Change navbar color when scrolling over white content
         ScrollTrigger.create({
             trigger: '.content-wrapper',
             start: 'top 100px',
             end: 'bottom top',
-            onEnter: () => document.querySelector('.navbar').classList.add('dark'),
-            onLeave: () => document.querySelector('.navbar').classList.remove('dark'),
-            onEnterBack: () => document.querySelector('.navbar').classList.add('dark'),
-            onLeaveBack: () => document.querySelector('.navbar').classList.remove('dark')
+            onEnter: () => navbar.classList.add('dark'),
+            onLeave: () => navbar.classList.remove('dark'),
+            onEnterBack: () => navbar.classList.add('dark'),
+            onLeaveBack: () => navbar.classList.remove('dark')
         });
         
         // Animate hero section
