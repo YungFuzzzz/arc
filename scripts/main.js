@@ -5,21 +5,18 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
     
-    // Hide navbar initially
     gsap.set('.navbar', { opacity: 0 });
     gsap.set(['.nav-container', '.logo-svg', '.nav-item', '.hamburger'], { opacity: 0 });
     gsap.set('.nav-container', { y: -50 });
     gsap.set('.nav-item', { y: 20 });
     gsap.set('.mobile-menu-overlay', { y: '-100%', pointerEvents: 'none' });
     
-    // Loader animation
     function initLoader() {
         const letters = document.querySelectorAll('.loader-letter');
         const isMobile = window.innerWidth <= 768;
         
         const loaderTl = gsap.timeline({
             onComplete: () => {
-                // Grid dissolve - each cell slides down or right
                 gsap.to('.loader-letter', {
                     x: isMobile ? '100%' : '0%',
                     y: isMobile ? '0%' : '100%',
@@ -37,7 +34,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
         
-        // Grid reveal - letters slide in
         loaderTl.to('.loader-letter', {
             x: isMobile ? '0%' : '0%',
             y: isMobile ? '0%' : '0%',
@@ -48,7 +44,6 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             ease: 'power3.out'
         })
-        // Fade in letters
         .to('.loader-letter', {
             opacity: 1,
             duration: 0.6,
@@ -58,7 +53,6 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             ease: 'power2.out'
         }, '-=0.6')
-        // Hold
         .to({}, { duration: 0.8 });
     }
     
@@ -184,7 +178,6 @@ document.addEventListener('DOMContentLoaded', function() {
             hamburger.classList.toggle('active');
             
             if (isMenuOpen) {
-                // Open menu - slide down from top
                 body.classList.add('menu-open');
                 
                 navbar.classList.add('menu-open');
@@ -195,7 +188,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     ease: 'power3.inOut'
                 });
                 
-                // Animate menu items after overlay starts sliding in
                 gsap.fromTo('.mobile-nav-item', {
                     y: 30,
                     opacity: 0
@@ -212,7 +204,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
         
-        // Close menu when clicking on a link
         mobileNavLinks.forEach(link => {
             link.addEventListener('click', closeMenu);
         });
@@ -223,7 +214,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const navbar = document.querySelector('.navbar');
         
-        // Change navbar color when scrolling over white content
         ScrollTrigger.create({
             trigger: '.content-wrapper',
             start: 'top 100px',
@@ -234,7 +224,6 @@ document.addEventListener('DOMContentLoaded', function() {
             onLeaveBack: () => navbar.classList.remove('dark')
         });
         
-        // Animate hero section
         gsap.from('.hero-title', {
             scrollTrigger: {
                 trigger: '.hero-section',
@@ -262,7 +251,6 @@ document.addEventListener('DOMContentLoaded', function() {
             ease: 'power3.out'
         });
         
-        // Animate section titles
         gsap.utils.toArray('.section-title').forEach((title) => {
             gsap.from(title, {
                 scrollTrigger: {
@@ -277,7 +265,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
         
-        // Animate project cards
         gsap.utils.toArray('.project-card').forEach((card, index) => {
             gsap.from(card, {
                 scrollTrigger: {
@@ -293,7 +280,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
         
-        // Animate about text
         gsap.from('.about-text', {
             scrollTrigger: {
                 trigger: '.about-section',
@@ -311,7 +297,6 @@ document.addEventListener('DOMContentLoaded', function() {
     setupRollingTextAnimations();
     setupMobileMenu();
     
-    // Initialize scroll animations after a short delay to ensure DOM is ready
     setTimeout(() => {
         initScrollAnimations();
     }, 100);

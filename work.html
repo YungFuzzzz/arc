@@ -3,28 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faisal Collinet</title>
+    <title>WORK - Faisal Collinet</title>
     <link rel="stylesheet" href="styles/fonts.css">
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/pages.css">
     <link rel="icon" type="image/x-icon" href="assets/images/logo.svg">
 </head>
 <body>
-    <div class="loader">
-        <div class="loader-content">
-            <div class="loader-text">
-                <span class="loader-letter">V</span>
-                <span class="loader-letter">I</span>
-                <span class="loader-letter">C</span>
-                <span class="loader-letter">E</span>
-                <span class="loader-letter">S</span>
-            </div>
-        </div>
-    </div>
-    <div id="three-container"></div>
-
     <nav class="navbar">
         <div class="logo">
-            <a href="/" class="logo-link">
+            <a href="index.html" class="logo-link">
                 <img src="assets/images/logo black.svg" alt="Logo" class="logo-svg">
             </a>
         </div>
@@ -37,7 +25,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="work.html" class="nav-link">
+                    <a href="work.html" class="nav-link active">
                         <span class="rolling-text" data-text="WORK">WORK</span>
                     </a>
                 </li>
@@ -53,12 +41,16 @@
                 </li>
             </ul>
         </div>
+
+        <!-- Hamburger Menu Button -->
         <button class="hamburger" aria-label="Menu">
             <span class="hamburger-line"></span>
             <span class="hamburger-line"></span>
             <span class="hamburger-line"></span>
         </button>
     </nav>
+
+    <!-- Mobile Menu Overlay -->
     <div class="mobile-menu-overlay">
         <ul class="mobile-nav-items">
             <li class="mobile-nav-item">
@@ -67,7 +59,7 @@
                 </a>
             </li>
             <li class="mobile-nav-item">
-                <a href="work.html" class="mobile-nav-link">
+                <a href="work.html" class="mobile-nav-link active">
                     <span class="rolling-text" data-text="WORK">WORK</span>
                 </a>
             </li>
@@ -83,52 +75,11 @@
             </li>
         </ul>
     </div>
-    <main class="content-wrapper">
-        <section class="hero-section">
-            <div class="container">
-                <h1 class="hero-title">FAISAL COLLINET</h1>
-                <p class="hero-subtitle">Creative Developer & Designer</p>
-            </div>
-        </section>
 
-        <section id="work" class="work-section">
-            <div class="container">
-                <h2 class="section-title">SELECTED WORK</h2>
-                <div class="projects-grid">
-                    <article class="project-card">
-                        <div class="project-image"></div>
-                        <h3 class="project-title">Project One</h3>
-                        <p class="project-description">Creative web experience</p>
-                    </article>
-                    <article class="project-card">
-                        <div class="project-image"></div>
-                        <h3 class="project-title">Project Two</h3>
-                        <p class="project-description">Interactive design</p>
-                    </article>
-                    <article class="project-card">
-                        <div class="project-image"></div>
-                        <h3 class="project-title">Project Three</h3>
-                        <p class="project-description">Digital art installation</p>
-                    </article>
-                </div>
-            </div>
-        </section>
-        <section id="about" class="about-section">
-            <div class="container">
-                <h2 class="section-title">ABOUT</h2>
-                <p class="about-text">Creative developer focused on building beautiful, interactive web experiences.</p>
-            </div>
-        </section>
-    </main>
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2025 Faisal Collinet. All rights reserved.</p>
-        </div>
-    </footer>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Page content here -->
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="scripts/scene.js"></script>
     <script src="scripts/main.js"></script>
 </body>
 </html>

@@ -1,0 +1,68 @@
+/* Styling for non-index pages (about, work, lab, contact) */
+
+/* Make navbar immediately visible without animation - set initial state before DOM loads */
+.navbar,
+.navbar .logo-svg,
+.navbar .nav-item,
+.navbar .nav-container,
+.navbar .hamburger {
+    opacity: 1 !important;
+    transform: none !important;
+}
+
+.navbar .nav-container {
+    transform: translateY(0) !important;
+}
+
+/* Start with black navbar and invert to white for visibility on white background */
+.navbar .logo-svg {
+    filter: invert(0);
+}
+
+.navbar .nav-link,
+.navbar .nav-link * {
+    color: #000 !important;
+}
+
+.navbar .hamburger-line {
+    background-color: #000;
+}
+
+/* When menu is open, keep black colors */
+.navbar.menu-open .logo-svg {
+    filter: invert(0);
+}
+
+.navbar.menu-open .hamburger-line {
+    background-color: #000;
+}
+
+/* Active page indicator - underline instead of italic to avoid overflow issues */
+.nav-item .nav-link.active {
+    position: relative;
+}
+
+.nav-item .nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #000;
+    mix-blend-mode: difference;
+}
+
+.mobile-nav-item .mobile-nav-link.active {
+    position: relative;
+}
+
+.mobile-nav-item .mobile-nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #000;
+}

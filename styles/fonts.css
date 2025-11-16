@@ -1,0 +1,50 @@
+/* Font definitions for the entire site */
+
+@font-face {
+    font-family: 'Metropolis';
+    src: url('../assets/fonts/metropolis.regular.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Metropolis';
+    src: url('../assets/fonts/metropolis.light.otf') format('opentype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Metropolis';
+    src: url('../assets/fonts/metropolis.extra-bold.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Metropolis';
+    src: url('../assets/fonts/metropolis.black.otf') format('opentype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+/* Legacy font-family names for backward compatibility */
+@font-face {
+    font-family: 'metropolis';
+    src: url(../assets/fonts/metropolis.regular.otf) format('opentype');
+}
+
+@font-face {
+    font-family: 'metropolisLight';
+    src: url(../assets/fonts/metropolis.light.otf) format('opentype');
+}
+
+@font-face {
+    font-family: 'metropolisBold';
+    src: url(../assets/fonts/metropolis.extra-bold.otf) format('opentype');
+}
+
+@font-face {
+    font-family: 'metropolisBlack';
+    src: url(../assets/fonts/metropolis.black.otf) format('opentype');
+}

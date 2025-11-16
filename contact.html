@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CONTACT - FAISAL</title>
+  <link rel="stylesheet" href="styles/fonts.css">
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/pages.css">
+  <link rel="stylesheet" href="./styles/contact.css" />
+  <link rel="icon" type="image/x-icon" href="assets/images/logo.svg">
+</head>
+<body>
+  <!-- Image trace container -->
+  <div class="image-container"></div>
+
+  <nav class="navbar">
+    <div class="logo">
+      <a href="index.html" class="logo-link">
+        <img src="assets/images/logo black.svg" alt="Logo" class="logo-svg">
+      </a>
+    </div>
+    
+    <div class="nav-container">
+      <ul class="nav-items">
+        <li class="nav-item">
+          <a href="about.html" class="nav-link">
+            <span class="rolling-text" data-text="ABOUT">ABOUT</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="work.html" class="nav-link">
+            <span class="rolling-text" data-text="WORK">WORK</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="lab.html" class="nav-link">
+            <span class="rolling-text" data-text="LAB">LAB</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="contact.html" class="nav-link active">
+            <span class="rolling-text" data-text="CONTACT">CONTACT</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Hamburger Menu Button -->
+    <button class="hamburger" aria-label="Menu">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+  </nav>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-menu-overlay">
+    <ul class="mobile-nav-items">
+      <li class="mobile-nav-item">
+        <a href="about.html" class="mobile-nav-link">
+          <span class="rolling-text" data-text="ABOUT">ABOUT</span>
+        </a>
+      </li>
+      <li class="mobile-nav-item">
+        <a href="work.html" class="mobile-nav-link">
+          <span class="rolling-text" data-text="WORK">WORK</span>
+        </a>
+      </li>
+      <li class="mobile-nav-item">
+        <a href="lab.html" class="mobile-nav-link">
+          <span class="rolling-text" data-text="LAB">LAB</span>
+        </a>
+      </li>
+      <li class="mobile-nav-item">
+        <a href="contact.html" class="mobile-nav-link active">
+          <span class="rolling-text" data-text="CONTACT">CONTACT</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Contact Content Here -->
+  <section class="contact-hero">
+    <div class="container">
+      <div class="contact-links">
+        <a href="mailto:faisalcollinet01@gmail.com" class="contact-link" data-text="EMAIL">EMAIL</a>
+        <a href="https://instagram.com/vicesdesign" target="_blank" rel="noopener" class="contact-link" data-text="INSTAGRAM">INSTAGRAM</a>
+        <a href="https://www.linkedin.com/in/faisal-collinet-2251b5232/" target="_blank" rel="noopener" class="contact-link" data-text="LINKEDIN">LINKEDIN</a>
+        <a href="./assets/files/resume_faisal_collinet.pdf" class="contact-link" download data-text="RESUME">RESUME</a>
+        <a href="https://github.com/YungFuzzzz" target="_blank" rel="noopener" class="contact-link" data-text="GITHUB">GITHUB</a>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="scripts/main.js"></script>
+  <script src="./scripts/contact.js"></script>
+</body>
+</html>

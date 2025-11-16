@@ -1,0 +1,79 @@
+/* Image trace container */
+.image-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+/* Canvas for liquid trail */
+.liquid-trail-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* Navbar styling is inherited from main.css */
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+/* Contact Content */
+.contact-hero {
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow-x: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 10;
+}
+
+.contact-links {
+    display: flex;
+    gap: 3rem;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.contact-link {
+    color: #000;
+    font-size: 2rem;
+    font-family: metropolisBold;
+    text-decoration: none;
+    letter-spacing: 2px;
+    transition: color 0.2s;
+    position: relative;
+    z-index: 10;
+}
+
+.contact-link::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: #000;
+    left: 0;
+    bottom: -2px;
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.3s ease;
+}
+
+.contact-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
