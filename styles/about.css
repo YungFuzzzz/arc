@@ -1,12 +1,14 @@
-/* Styling for non-index pages (about, work, lab, contact) */
+@import 'navbar.css';
 
-/* Make navbar immediately visible without animation - set initial state before DOM loads */
 .navbar,
 .navbar .logo-svg,
 .navbar .nav-item,
 .navbar .nav-container,
 .navbar .hamburger {
     opacity: 1 !important;
+}
+
+.navbar .nav-item {
     transform: none !important;
 }
 
@@ -14,7 +16,6 @@
     transform: translateY(0) !important;
 }
 
-/* Start with black navbar and invert to white for visibility on white background */
 .navbar .logo-svg {
     filter: invert(0);
 }
@@ -28,7 +29,6 @@
     background-color: #000;
 }
 
-/* When menu is open, keep black colors */
 .navbar.menu-open .logo-svg {
     filter: invert(0);
 }
@@ -37,7 +37,6 @@
     background-color: #000;
 }
 
-/* Active page indicator - underline instead of italic to avoid overflow issues */
 .nav-item .nav-link.active {
     position: relative;
 }

@@ -1,5 +1,3 @@
-/* Font definitions for the entire site */
-
 @font-face {
     font-family: 'Metropolis';
     src: url('../assets/fonts/metropolis.regular.otf') format('opentype');
@@ -28,7 +26,6 @@
     font-style: normal;
 }
 
-/* Legacy font-family names for backward compatibility */
 @font-face {
     font-family: 'metropolis';
     src: url(../assets/fonts/metropolis.regular.otf) format('opentype');

@@ -1,0 +1,67 @@
+@import 'navbar.css';
+
+.navbar,
+.navbar .logo-svg,
+.navbar .nav-item,
+.navbar .nav-container,
+.navbar .hamburger {
+    opacity: 1 !important;
+}
+
+.navbar .nav-item {
+    transform: none !important;
+}
+
+.navbar .nav-container {
+    transform: translateY(0) !important;
+}
+
+.navbar .logo-svg {
+    filter: invert(0);
+}
+
+.navbar .nav-link,
+.navbar .nav-link * {
+    color: #000 !important;
+}
+
+.navbar .hamburger-line {
+    background-color: #000;
+}
+
+.navbar.menu-open .logo-svg {
+    filter: invert(0);
+}
+
+.navbar.menu-open .hamburger-line {
+    background-color: #000;
+}
+
+.nav-item .nav-link.active {
+    position: relative;
+}
+
+.nav-item .nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #000;
+    mix-blend-mode: difference;
+}
+
+.mobile-nav-item .mobile-nav-link.active {
+    position: relative;
+}
+
+.mobile-nav-item .mobile-nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #000;
+}

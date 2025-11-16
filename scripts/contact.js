@@ -1,53 +1,65 @@
-// Contact page JavaScript
-// Initialize GSAP plugins
-if (typeof gsap !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
-}
-
-// Initialize components
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('Contact page loaded');
+  if (typeof gsap === 'undefined') {
+    return;
+  }
+  
+  gsap.registerPlugin(ScrollTrigger);
+  setupRollingTextAnimations();
+  setupMobileMenu();
   initContactAnimations();
   initImageTrace();
 });
 
-// Contact page animations
 function initContactAnimations() {
-  // Contact links animation with stagger effect
   const contactLinks = document.querySelectorAll('.contact-link');
   
   if (contactLinks.length > 0 && typeof gsap !== 'undefined') {
-    // Set initial state
-    gsap.set(contactLinks, { opacity: 0, y: 40 });
+    gsap.set(contactLinks, { 
+      opacity: 0, 
+      y: 60,
+      rotationX: -15
+    });
     
-    // Animate in
     gsap.to(contactLinks, {
       opacity: 1,
       y: 0,
-      duration: 0.8,
-      stagger: 0.1,
+      rotationX: 0,
+      duration: 1.2,
+      stagger: 0.15,
       ease: "power3.out",
       delay: 0.3
+    });
+
+    contactLinks.forEach(link => {
+      link.addEventListener('mouseenter', () => {
+        gsap.to(link, {
+          '--underline-scale': '1',
+          duration: 0.25,
+          ease: 'none'
+        });
+      });
+      
+      link.addEventListener('mouseleave', () => {
+        gsap.to(link, {
+          '--underline-scale': '0',
+          duration: 0.25,
+          ease: 'none'
+        });
+      });
     });
   }
 }
 
-// Liquid trace functionality
 function initImageTrace() {
   const imageContainer = document.querySelector('.image-container');
   
-  if (!imageContainer) {
-    console.log('Image container not found');
-    return;
-  }
+  if (!imageContainer) return;
 
-  // Create canvas for liquid trail
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d');
   canvas.className = 'liquid-trail-canvas';
   imageContainer.appendChild(canvas);
 
-  // Set canvas size
   function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -55,186 +67,163 @@ function initImageTrace() {
   resizeCanvas();
   window.addEventListener('resize', resizeCanvas);
 
-  // Trail points array
   const trailPoints = [];
-  const maxPoints = 150; // Increased for smoother trail
+  const maxPoints = 150;
   let mouseX = window.innerWidth / 2;
   let mouseY = window.innerHeight / 2;
   let lastRenderTime = 0;
-  const targetFPS = 60; // Smoother at 60fps
+  const targetFPS = 60;
   const frameInterval = 1000 / targetFPS;
 
-  // Color schemes - randomly selected on page load
   const colorSchemes = [
-    // Scheme 1: Deep Ocean to Electric Cyan
     [
-      { r: 0, g: 20, b: 40 },       // Deep ocean
-      { r: 0, g: 60, b: 100 },      
-      { r: 0, g: 100, b: 150 },     
-      { r: 0, g: 150, b: 200 },     
-      { r: 30, g: 200, b: 255 },    
-      { r: 100, g: 230, b: 255 },   
-      { r: 150, g: 255, b: 255 }    // Bright cyan
+      { r: 20, g: 40, b: 80 },
+      { r: 25, g: 55, b: 100 },
+      { r: 30, g: 70, b: 120 },
+      { r: 35, g: 90, b: 145 },
+      { r: 45, g: 115, b: 175 },
+      { r: 60, g: 145, b: 210 },
+      { r: 80, g: 180, b: 240 }
     ],
-    // Scheme 2: Sunset Dream
     [
-      { r: 120, g: 0, b: 120 },     // Deep purple
-      { r: 150, g: 30, b: 100 },    
-      { r: 200, g: 50, b: 80 },     
-      { r: 255, g: 100, b: 60 },    // Coral
-      { r: 255, g: 150, b: 50 },    
-      { r: 255, g: 200, b: 80 },    
-      { r: 255, g: 240, b: 120 }    // Warm yellow
+      { r: 100, g: 50, b: 120 },
+      { r: 120, g: 60, b: 130 },
+      { r: 145, g: 75, b: 145 },
+      { r: 170, g: 90, b: 160 },
+      { r: 195, g: 110, b: 180 },
+      { r: 220, g: 135, b: 205 },
+      { r: 240, g: 165, b: 230 }
     ],
-    // Scheme 3: Aurora Borealis
     [
-      { r: 10, g: 50, b: 80 },      // Night blue
-      { r: 30, g: 100, b: 150 },    
-      { r: 50, g: 180, b: 180 },    // Teal
-      { r: 100, g: 220, b: 180 },   
-      { r: 150, g: 255, b: 150 },   // Mint green
-      { r: 200, g: 255, b: 200 },   
-      { r: 230, g: 255, b: 230 }    // Pale mint
+      { r: 40, g: 80, b: 100 },
+      { r: 50, g: 100, b: 120 },
+      { r: 60, g: 125, b: 145 },
+      { r: 75, g: 150, b: 170 },
+      { r: 95, g: 180, b: 195 },
+      { r: 120, g: 210, b: 220 },
+      { r: 150, g: 235, b: 240 }
     ],
-    // Scheme 4: Neon Nights
     [
-      { r: 255, g: 0, b: 150 },     // Hot pink
-      { r: 255, g: 50, b: 200 },    
-      { r: 200, g: 100, b: 255 },   // Purple
-      { r: 150, g: 100, b: 255 },   
-      { r: 100, g: 150, b: 255 },   
-      { r: 50, g: 200, b: 255 },    
-      { r: 0, g: 255, b: 255 }      // Cyan
+      { r: 180, g: 60, b: 120 },
+      { r: 190, g: 70, b: 130 },
+      { r: 205, g: 85, b: 145 },
+      { r: 220, g: 100, b: 160 },
+      { r: 235, g: 120, b: 180 },
+      { r: 245, g: 145, b: 205 },
+      { r: 255, g: 175, b: 230 }
     ],
-    // Scheme 5: Fire & Ice
     [
-      { r: 0, g: 150, b: 255 },     // Ice blue
-      { r: 100, g: 200, b: 255 },   
-      { r: 200, g: 220, b: 255 },   
-      { r: 255, g: 200, b: 200 },   
-      { r: 255, g: 150, b: 100 },   
-      { r: 255, g: 100, b: 50 },    
-      { r: 255, g: 50, b: 0 }       // Flame
+      { r: 80, g: 120, b: 180 },
+      { r: 95, g: 135, b: 190 },
+      { r: 115, g: 155, b: 205 },
+      { r: 140, g: 175, b: 220 },
+      { r: 170, g: 195, b: 235 },
+      { r: 200, g: 215, b: 245 },
+      { r: 230, g: 235, b: 255 }
     ],
-    // Scheme 6: Tropical Paradise
     [
-      { r: 0, g: 100, b: 150 },     // Ocean blue
-      { r: 0, g: 150, b: 180 },     
-      { r: 50, g: 200, b: 150 },    // Turquoise
-      { r: 100, g: 255, b: 150 },   
-      { r: 150, g: 255, b: 100 },   
-      { r: 200, g: 255, b: 100 },   
-      { r: 255, g: 255, b: 100 }    // Bright yellow
+      { r: 60, g: 110, b: 100 },
+      { r: 70, g: 130, b: 115 },
+      { r: 85, g: 155, b: 135 },
+      { r: 105, g: 180, b: 155 },
+      { r: 130, g: 205, b: 180 },
+      { r: 160, g: 225, b: 205 },
+      { r: 195, g: 245, b: 230 }
     ],
-    // Scheme 7: Galaxy Dreams
     [
-      { r: 20, g: 0, b: 50 },       // Deep space
-      { r: 60, g: 20, b: 100 },     
-      { r: 100, g: 50, b: 150 },    // Purple
-      { r: 150, g: 80, b: 200 },    
-      { r: 200, g: 120, b: 255 },   
-      { r: 230, g: 170, b: 255 },   
-      { r: 255, g: 220, b: 255 }    // Lavender
+      { r: 60, g: 40, b: 100 },
+      { r: 75, g: 55, b: 120 },
+      { r: 95, g: 70, b: 145 },
+      { r: 120, g: 90, b: 170 },
+      { r: 150, g: 115, b: 200 },
+      { r: 185, g: 145, b: 225 },
+      { r: 220, g: 180, b: 245 }
     ],
-    // Scheme 8: Cherry Blossom
     [
-      { r: 100, g: 0, b: 80 },      // Deep pink
-      { r: 150, g: 50, b: 120 },    
-      { r: 200, g: 100, b: 150 },   
-      { r: 255, g: 150, b: 180 },   // Rose
-      { r: 255, g: 180, b: 200 },   
-      { r: 255, g: 210, b: 220 },   
-      { r: 255, g: 240, b: 245 }    // Soft pink
+      { r: 140, g: 60, b: 90 },
+      { r: 160, g: 75, b: 105 },
+      { r: 180, g: 95, b: 125 },
+      { r: 200, g: 115, b: 145 },
+      { r: 220, g: 140, b: 170 },
+      { r: 235, g: 170, b: 195 },
+      { r: 250, g: 205, b: 225 }
     ],
-    // Scheme 9: Electric Lime
     [
-      { r: 0, g: 100, b: 0 },       // Forest green
-      { r: 50, g: 150, b: 50 },     
-      { r: 100, g: 200, b: 50 },    
-      { r: 150, g: 255, b: 50 },    // Lime
-      { r: 200, g: 255, b: 100 },   
-      { r: 230, g: 255, b: 150 },   
-      { r: 255, g: 255, b: 200 }    // Pale yellow
+      { r: 80, g: 120, b: 60 },
+      { r: 95, g: 140, b: 75 },
+      { r: 115, g: 165, b: 95 },
+      { r: 140, g: 190, b: 120 },
+      { r: 170, g: 215, b: 150 },
+      { r: 205, g: 235, b: 185 },
+      { r: 235, g: 250, b: 220 }
     ],
-    // Scheme 10: Royal Velvet
     [
-      { r: 50, g: 0, b: 100 },      // Deep purple
-      { r: 100, g: 20, b: 150 },    
-      { r: 150, g: 50, b: 200 },    
-      { r: 200, g: 100, b: 230 },   // Violet
-      { r: 220, g: 150, b: 255 },   
-      { r: 240, g: 200, b: 255 },   
-      { r: 255, g: 230, b: 255 }    // Soft lavender
+      { r: 100, g: 80, b: 140 },
+      { r: 120, g: 95, b: 160 },
+      { r: 145, g: 115, b: 185 },
+      { r: 170, g: 140, b: 210 },
+      { r: 200, g: 170, b: 230 },
+      { r: 225, g: 200, b: 245 },
+      { r: 245, g: 230, b: 255 }
     ],
-    // Scheme 11: Golden Hour
     [
-      { r: 150, g: 50, b: 0 },      // Deep orange
-      { r: 200, g: 80, b: 0 },      
-      { r: 255, g: 120, b: 0 },     // Orange
-      { r: 255, g: 160, b: 50 },    
-      { r: 255, g: 200, b: 100 },   
-      { r: 255, g: 230, b: 150 },   
-      { r: 255, g: 250, b: 200 }    // Warm cream
+      { r: 180, g: 90, b: 60 },
+      { r: 195, g: 105, b: 75 },
+      { r: 215, g: 125, b: 95 },
+      { r: 230, g: 150, b: 120 },
+      { r: 240, g: 180, b: 150 },
+      { r: 250, g: 210, b: 185 },
+      { r: 255, g: 235, b: 220 }
     ],
-    // Scheme 12: Candy Pop
     [
-      { r: 255, g: 0, b: 200 },     // Magenta
-      { r: 255, g: 80, b: 220 },    
-      { r: 255, g: 120, b: 255 },   // Pink purple
-      { r: 220, g: 150, b: 255 },   
-      { r: 180, g: 180, b: 255 },   
-      { r: 200, g: 220, b: 255 },   
-      { r: 230, g: 240, b: 255 }    // Baby blue
+      { r: 40, g: 60, b: 120 },
+      { r: 55, g: 80, b: 140 },
+      { r: 75, g: 105, b: 165 },
+      { r: 100, g: 135, b: 190 },
+      { r: 130, g: 165, b: 215 },
+      { r: 165, g: 195, b: 235 },
+      { r: 200, g: 225, b: 250 }
     ],
-    // Scheme 13: Fresh Mint
     [
-      { r: 0, g: 150, b: 136 },     // Teal
-      { r: 50, g: 180, b: 160 },    
-      { r: 80, g: 210, b: 180 },    
-      { r: 120, g: 240, b: 200 },   // Mint
-      { r: 160, g: 255, b: 220 },   
-      { r: 200, g: 255, b: 235 },   
-      { r: 230, g: 255, b: 245 }    // Ice mint
+      { r: 120, g: 80, b: 140 },
+      { r: 140, g: 95, b: 160 },
+      { r: 165, g: 115, b: 185 },
+      { r: 190, g: 140, b: 210 },
+      { r: 215, g: 170, b: 230 },
+      { r: 235, g: 200, b: 245 },
+      { r: 250, g: 220, b: 255 }
     ],
-    // Scheme 14: Cosmic Berry
     [
-      { r: 100, g: 0, b: 150 },     // Deep purple
-      { r: 150, g: 0, b: 180 },     
-      { r: 200, g: 50, b: 200 },    // Magenta purple
-      { r: 255, g: 80, b: 180 },    
-      { r: 255, g: 120, b: 150 },   
-      { r: 255, g: 160, b: 180 },   
-      { r: 255, g: 200, b: 220 }    // Rose quartz
+      { r: 60, g: 140, b: 120 },
+      { r: 75, g: 160, b: 140 },
+      { r: 95, g: 185, b: 165 },
+      { r: 120, g: 210, b: 190 },
+      { r: 150, g: 230, b: 215 },
+      { r: 185, g: 245, b: 235 },
+      { r: 220, g: 255, b: 250 }
     ],
-    // Scheme 15: Arctic Sky
     [
-      { r: 50, g: 100, b: 150 },    // Steel blue
-      { r: 80, g: 150, b: 200 },    
-      { r: 120, g: 200, b: 240 },   // Sky blue
-      { r: 160, g: 230, b: 255 },   
-      { r: 200, g: 245, b: 255 },   
-      { r: 230, g: 250, b: 255 },   
-      { r: 245, g: 255, b: 255 }    // Ice white
+      { r: 140, g: 100, b: 160 },
+      { r: 160, g: 120, b: 180 },
+      { r: 185, g: 145, b: 205 },
+      { r: 210, g: 170, b: 225 },
+      { r: 230, g: 195, b: 240 },
+      { r: 245, g: 215, b: 250 },
+      { r: 255, g: 235, b: 255 }
     ]
   ];
 
-  // Randomly select a color scheme
-  const selectedScheme = Math.floor(Math.random() * colorSchemes.length);
-  const colors = colorSchemes[selectedScheme];
-  
-  console.log(`Selected color scheme: ${selectedScheme + 1}`); // Debug log
+  const selectedSchemeIndex = Math.floor(Math.random() * colorSchemes.length);
+  const selectedScheme = colorSchemes[selectedSchemeIndex];
 
-  // Track mouse movement
   document.addEventListener('mousemove', (e) => {
     mouseX = e.clientX;
     mouseY = e.clientY;
     
-    // Add points more frequently for smoother trail
     const lastPoint = trailPoints[trailPoints.length - 1];
     const distance = lastPoint ? 
       Math.sqrt((mouseX - lastPoint.x) ** 2 + (mouseY - lastPoint.y) ** 2) : 0;
     
-    // Lower threshold for more fluid motion
     if (!lastPoint || distance > 5) {
       trailPoints.push({
         x: mouseX,
@@ -244,44 +233,34 @@ function initImageTrace() {
       });
     }
 
-    // Remove old points
     if (trailPoints.length > maxPoints) {
       trailPoints.splice(0, trailPoints.length - maxPoints);
     }
   });
 
-  // Animation loop with FPS limiting
   function animate() {
     const currentTime = Date.now();
     
-    // Limit frame rate for better performance
     if (currentTime - lastRenderTime < frameInterval) {
       requestAnimationFrame(animate);
       return;
     }
     lastRenderTime = currentTime;
     
-    // Clear canvas completely for bright colors
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
     ctx.globalCompositeOperation = 'source-over';
-
-    // Update and draw trail points
     
     for (let i = trailPoints.length - 1; i >= 0; i--) {
       const point = trailPoints[i];
       const age = currentTime - point.time;
-      const maxAge = 2500; // Slightly faster fade for more dynamic feel
+      const maxAge = 2500;
       
-      // Smoother fade curve
       const fadeProgress = age / maxAge;
       if (fadeProgress < 0.6) {
-        // Stay visible for 60% of lifetime
         point.life = 1.0;
       } else {
-        // Smooth exponential fade in last 40%
         const quickFadeProgress = (fadeProgress - 0.6) / 0.4;
-        point.life = Math.max(0, Math.pow(1 - quickFadeProgress, 2.5)); // Smoother fade
+        point.life = Math.max(0, Math.pow(1 - quickFadeProgress, 2.5));
       }
       
       if (point.life <= 0.01) {
@@ -289,24 +268,20 @@ function initImageTrace() {
         continue;
       }
 
-      // Calculate color based on position in trail
       const progress = i / trailPoints.length;
-      const colorIndex = Math.floor(progress * (colors.length - 1));
-      const colorProgress = (progress * (colors.length - 1)) % 1;
+      const colorIndex = Math.floor(progress * (selectedScheme.length - 1));
+      const colorProgress = (progress * (selectedScheme.length - 1)) % 1;
       
-      const color1 = colors[colorIndex] || colors[0];
-      const color2 = colors[colorIndex + 1] || colors[colors.length - 1];
+      const color1 = selectedScheme[colorIndex] || selectedScheme[0];
+      const color2 = selectedScheme[colorIndex + 1] || selectedScheme[selectedScheme.length - 1];
       
-      // Smooth interpolation between colors
       const r = Math.round(color1.r + (color2.r - color1.r) * colorProgress);
       const g = Math.round(color1.g + (color2.g - color1.g) * colorProgress);
       const b = Math.round(color1.b + (color2.b - color1.b) * colorProgress);
       
-      // Draw smooth liquid blob
-      const size = (45 + progress * 75) * point.life; // Larger range for more fluid look
-      const opacity = Math.pow(point.life, 0.6) * 0.8; // Higher opacity for more vibrant colors
+      const size = (45 + progress * 75) * point.life;
+      const opacity = Math.pow(point.life, 0.6) * 0.8;
       
-      // Smoother gradient with more stops
       const gradient = ctx.createRadialGradient(
         point.x, point.y, 0,
         point.x, point.y, size
@@ -325,5 +300,5 @@ function initImageTrace() {
     requestAnimationFrame(animate);
   }
 
-  animate();
+  requestAnimationFrame(animate);
 }

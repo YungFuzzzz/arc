@@ -1,4 +1,71 @@
-/* Image trace container */
+@import 'navbar.css';
+
+.navbar,
+.navbar .logo-svg,
+.navbar .nav-item,
+.navbar .nav-container,
+.navbar .hamburger {
+    opacity: 1 !important;
+}
+
+.navbar .nav-item {
+    transform: none !important;
+}
+
+.navbar .nav-container {
+    transform: translateY(0) !important;
+}
+
+.navbar .logo-svg {
+    filter: invert(0);
+}
+
+.navbar .nav-link,
+.navbar .nav-link * {
+    color: #000 !important;
+}
+
+.navbar .hamburger-line {
+    background-color: #000;
+}
+
+.navbar.menu-open .logo-svg {
+    filter: invert(0);
+}
+
+.navbar.menu-open .hamburger-line {
+    background-color: #000;
+}
+
+.nav-item .nav-link.active {
+    position: relative;
+}
+
+.nav-item .nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #000;
+    mix-blend-mode: difference;
+}
+
+.mobile-nav-item .mobile-nav-link.active {
+    position: relative;
+}
+
+.mobile-nav-item .mobile-nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #000;
+}
+
 .image-container {
     position: absolute;
     top: 0;
@@ -9,7 +76,6 @@
     overflow: hidden;
 }
 
-/* Canvas for liquid trail */
 .liquid-trail-canvas {
     position: absolute;
     top: 0;
@@ -20,15 +86,12 @@
     z-index: 2;
 }
 
-/* Navbar styling is inherited from main.css */
-
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 40px;
 }
 
-/* Contact Content */
 .contact-hero {
     margin: 0;
     width: 100vw;
@@ -42,11 +105,26 @@
 }
 
 .contact-links {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(4, auto);
     gap: 3rem;
     align-items: center;
     justify-content: center;
-    flex-wrap: wrap;
+}
+
+@media (max-width: 1024px) {
+    .contact-links {
+        grid-template-columns: repeat(2, auto);
+        gap: 2.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .contact-links {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+    }
 }
 
 .contact-link {
@@ -55,9 +133,12 @@
     font-family: metropolisBold;
     text-decoration: none;
     letter-spacing: 2px;
-    transition: color 0.2s;
     position: relative;
     z-index: 10;
+    display: inline-block;
+    --underline-scale: 0;
+    perspective: 1000px;
+    will-change: transform;
 }
 
 .contact-link::after {
@@ -68,12 +149,7 @@
     background-color: #000;
     left: 0;
     bottom: -2px;
-    transform: scaleX(0);
-    transform-origin: bottom right;
-    transition: transform 0.3s ease;
-}
-
-.contact-link:hover::after {
-    transform: scaleX(1);
-    transform-origin: bottom left;
+    transform: scaleX(var(--underline-scale));
+    transform-origin: center;
+    transition: transform 0.01s linear;
 }
