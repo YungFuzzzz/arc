@@ -103,6 +103,7 @@ document.addEventListener('DOMContentLoaded', function() {
             onLeaveBack: () => navbar.classList.remove('dark')
         });
         
+        // Hero title animation
         gsap.from('.hero-title', {
             scrollTrigger: {
                 trigger: '.hero-section',
@@ -110,10 +111,40 @@ document.addEventListener('DOMContentLoaded', function() {
                 end: 'bottom 20%',
                 toggleActions: 'play none none reverse'
             },
-            y: 50,
+            y: 60,
+            opacity: 0,
+            duration: 1.2,
+            ease: 'power3.out'
+        });
+        
+        // Hero description animation
+        gsap.from('.hero-description', {
+            scrollTrigger: {
+                trigger: '.hero-section',
+                start: 'top 80%',
+                end: 'bottom 20%',
+                toggleActions: 'play none none reverse'
+            },
+            y: 40,
             opacity: 0,
             duration: 1,
+            delay: 0.3,
             ease: 'power3.out'
+        });
+        
+        // Hero bottom section (name and subtitle)
+        gsap.from('.hero-name', {
+            scrollTrigger: {
+                trigger: '.hero-section',
+                start: 'top 80%',
+                end: 'bottom 20%',
+                toggleActions: 'play none none reverse'
+            },
+            y: 30,
+            opacity: 0,
+            duration: 0.8,
+            delay: 0.5,
+            ease: 'power2.out'
         });
         
         gsap.from('.hero-subtitle', {
@@ -125,9 +156,9 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             y: 30,
             opacity: 0,
-            duration: 1,
-            delay: 0.2,
-            ease: 'power3.out'
+            duration: 0.8,
+            delay: 0.6,
+            ease: 'power2.out'
         });
         
         gsap.utils.toArray('.section-title').forEach((title) => {
@@ -179,4 +210,12 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(() => {
         initScrollAnimations();
     }, 100);
+    
+    // Activate status dot after loader
+    setTimeout(() => {
+        const statusDot = document.querySelector('.status-dot');
+        if (statusDot) {
+            statusDot.classList.add('active');
+        }
+    }, 3000);
 });

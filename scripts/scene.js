@@ -29,7 +29,7 @@ function initThreeJS() {
 
     // Load GLB model
     const loader = new GLTFLoader();
-    loader.load('assets/models/viceslogo.glb', function(gltf) {
+    loader.load('assets/models/originallogo.glb', function(gltf) {
         model = gltf.scene;
         
         // Center the model
