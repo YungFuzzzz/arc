@@ -1,9 +1,15 @@
-let scene, camera, renderer, cube;
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+let scene, camera, renderer, model, controls, clock;
 
 function initThreeJS() {
     const container = document.getElementById('three-container');
 
     scene = new THREE.Scene();
+    
+    clock = new THREE.Clock();
 
     camera = new THREE.PerspectiveCamera(
         75,
@@ -21,16 +27,33 @@ function initThreeJS() {
     renderer.setPixelRatio(window.devicePixelRatio);
     container.appendChild(renderer.domElement);
 
-    const geometry = new THREE.BoxGeometry(2, 2, 2);
-    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-    cube = new THREE.Mesh(geometry, material);
-    scene.add(cube);
+    // Load GLB model
+    const loader = new GLTFLoader();
+    loader.load('assets/models/viceslogo.glb', function(gltf) {
+        model = gltf.scene;
+        
+        // Center the model
+        const box = new THREE.Box3().setFromObject(model);
+        const center = box.getCenter(new THREE.Vector3());
+        model.position.sub(center);
+        
+        scene.add(model);
+    }, undefined, function(error) {
+        console.error('Error loading model:', error);
+    });
 
     scene.add(new THREE.AmbientLight(0xffffff, 0.5));
     
     const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
     directionalLight.position.set(5, 5, 5);
     scene.add(directionalLight);
+
+    // Add OrbitControls but disable zoom and pan
+    controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableZoom = false;
+    controls.enablePan = false;
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
 
     window.addEventListener('resize', onWindowResize, false);
     
@@ -46,8 +69,13 @@ function onWindowResize() {
 function animate() {
     requestAnimationFrame(animate);
 
-    cube.rotation.x += 0.01;
-    cube.rotation.y += 0.01;
+    const delta = clock.getDelta();
+
+    if (model) {
+        model.rotation.y += delta * 0.5; // 0.5 radians per second
+    }
+    
+    controls.update();
     
     renderer.render(scene, camera);
 }
