@@ -161,6 +161,81 @@ document.addEventListener('DOMContentLoaded', function() {
             ease: 'power2.out'
         });
         
+        // Contact section animations - simple Y translation only
+        gsap.from('.contact-section .section-title', {
+            scrollTrigger: {
+                trigger: '.contact-section',
+                start: 'top 80%',
+                toggleActions: 'play none none reverse'
+            },
+            y: 40,
+            duration: 0.8,
+            ease: 'power2.out'
+        });
+        
+        gsap.from('.email-link', {
+            scrollTrigger: {
+                trigger: '.contact-section',
+                start: 'top 80%',
+                toggleActions: 'play none none reverse'
+            },
+            y: 30,
+            duration: 0.8,
+            delay: 0.15,
+            ease: 'power2.out'
+        });
+        
+        gsap.from('.contact-divider', {
+            scrollTrigger: {
+                trigger: '.contact-section',
+                start: 'top 80%',
+                toggleActions: 'play none none reverse'
+            },
+            y: 20,
+            duration: 0.8,
+            delay: 0.3,
+            ease: 'power2.out'
+        });
+        
+        gsap.from('.social-link', {
+            scrollTrigger: {
+                trigger: '.contact-section',
+                start: 'top 80%',
+                toggleActions: 'play none none reverse'
+            },
+            y: 20,
+            duration: 0.8,
+            stagger: 0.1,
+            delay: 0.45,
+            ease: 'power2.out'
+        });
+        
+        // Footer animations
+        gsap.from('.footer-column', {
+            scrollTrigger: {
+                trigger: 'footer',
+                start: 'top 85%',
+                toggleActions: 'play none none reverse'
+            },
+            y: 40,
+            opacity: 0,
+            duration: 0.8,
+            stagger: 0.15,
+            ease: 'power2.out'
+        });
+        
+        gsap.from('.footer-copyright', {
+            scrollTrigger: {
+                trigger: 'footer',
+                start: 'top 85%',
+                toggleActions: 'play none none reverse'
+            },
+            opacity: 0,
+            duration: 0.8,
+            delay: 0.6,
+            ease: 'power2.out'
+        });
+        
         gsap.from('.about-information', {
             scrollTrigger: {
                 trigger: '.about-section',
