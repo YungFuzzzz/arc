@@ -267,68 +267,131 @@ body {
     background-color: #ffffff;
 }
 
+.work-section .container {
+    max-width: none;
+    padding: 0 36px;
+}
+
 .section-title {
     font-family: 'Metropolis';
-    font-weight: 700;
-    font-size: 48px;
+    font-weight: 900;
+    font-size: 64px;
+    letter-spacing: 4px;
     margin-bottom: 80px;
-    text-align: center;
+    text-align: left;
     color: #000;
 }
 
-.projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 40px;
+.projects-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
 }
 
-.project-card {
-    background-color: #fff;
-    border-radius: 8px;
-    overflow: hidden;
-    transition: transform 0.3s ease;
+.project-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+    color: #000;
+    transition: all 0.3s ease;
 }
 
-.project-card:hover {
-    transform: translateY(-10px);
+.project-item:hover {
+    padding-left: 20px;
+    opacity: 0.7;
 }
 
-.project-image {
-    width: 100%;
-    height: 300px;
-    background-color: #ddd;
+.project-item:first-child {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.project-title {
+.project-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.project-name {
     font-family: 'Metropolis';
     font-weight: 700;
-    font-size: 24px;
-    padding: 24px 24px 8px;
-    color: #000;
+    font-size: 32px;
+    margin: 0;
+    letter-spacing: 2px;
 }
 
-.project-description {
+.project-type {
     font-family: 'Metropolis';
     font-weight: 400;
     font-size: 16px;
-    padding: 0 24px 24px;
-    color: #666;
+    margin: 0;
+    opacity: 0.6;
 }
 
-.about-section {
+.project-year {
+    font-family: 'Metropolis';
+    font-weight: 300;
+    font-size: 18px;
+    opacity: 0.5;
+}
+
+.contact-section {
     padding: 120px 0;
     background-color: #ffffff;
 }
 
-.about-text {
+.contact-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+}
+
+.email-link {
+    font-family: 'Metropolis';
+    font-weight: 700;
+    font-size: 24px;
+    color: #000;
+    text-decoration: none;
+    letter-spacing: 2px;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+.email-link:hover {
+    opacity: 1;
+}
+
+.contact-divider {
     font-family: 'Metropolis';
     font-weight: 400;
-    font-size: 24px;
-    text-align: center;
-    max-width: 800px;
-    margin: 0 auto;
-    line-height: 1.6;
+    font-size: 16px;
     color: #000;
+    opacity: 0.4;
+    margin: 8px 0;
+}
+
+.social-links {
+    display: flex;
+    gap: 24px;
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    color: #000;
+    opacity: 0.6;
+    transition: all 0.3s ease;
+}
+
+.social-link:hover {
+    opacity: 1;
+    transform: translateY(-4px);
 }
 
 .footer {
