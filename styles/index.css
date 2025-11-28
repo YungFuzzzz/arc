@@ -145,7 +145,7 @@ body {
     padding: 0 36px;
 }
 
-.hero-section {
+.about-section {
     min-height: 100vh;
     display: flex;
     align-items: flex-start;
@@ -154,7 +154,7 @@ body {
     padding-top: 68px;
 }
 
-.hero-section .container {
+.about-section .container {
     width: 100%;
     max-width: none;
     display: flex;
@@ -164,11 +164,11 @@ body {
     padding: 36px;
 }
 
-.hero-content {
+.about-content {
     max-width: 50vw;
 }
 
-.hero-title {
+.about-title {
     font-family: 'Metropolis';
     font-weight: 900;
     font-size: 82px;
@@ -179,7 +179,7 @@ body {
     margin-bottom: 24px;
 }
 
-.hero-description {
+.about-description {
     font-family: 'Metropolis';
     font-weight: 400;
     font-size: 18px;
@@ -189,14 +189,14 @@ body {
     margin: 0;
 }
 
-.hero-bottom {
+.about-bottom {
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
 }
 
-.hero-name {
+.about-name {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -254,6 +254,10 @@ body {
     line-height: 1;
 }
 
+.availability-text {
+    line-height: 1;
+}
+
 .hero-subtitle {
     font-family: 'Metropolis';
     font-weight: 300;
@@ -262,14 +266,31 @@ body {
     opacity: 0.8;
 }
 
+.about-information {
+    font-family: 'Metropolis';
+    font-weight: 300;
+    font-size: 16px;
+    color: #000;
+    opacity: 0.8;
+}
+
 .work-section {
+    min-height: 100vh;
     padding: 120px 0;
     background-color: #ffffff;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
 }
 
 .work-section .container {
     max-width: none;
-    padding: 0 36px;
+    padding: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 80px;
 }
 
 .section-title {
@@ -277,31 +298,33 @@ body {
     font-weight: 900;
     font-size: 64px;
     letter-spacing: 4px;
-    margin-bottom: 80px;
+    margin: 0;
     text-align: left;
     color: #000;
+    padding: 0 36px;
 }
 
 .projects-list {
     display: flex;
     flex-direction: column;
     gap: 0;
+    position: relative;
 }
 
 .project-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 40px 0;
+    padding: 40px 36px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     text-decoration: none;
     color: #000;
     transition: all 0.3s ease;
+    position: relative;
 }
 
 .project-item:hover {
-    padding-left: 20px;
-    opacity: 0.7;
+    padding-left: 56px;
 }
 
 .project-item:first-child {
@@ -312,6 +335,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 8px;
+    z-index: 2;
 }
 
 .project-name {
@@ -330,13 +354,75 @@ body {
     opacity: 0.6;
 }
 
-.project-year {
-    font-family: 'Metropolis';
-    font-weight: 300;
-    font-size: 18px;
-    opacity: 0.5;
+.project-image-container {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 400px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    overflow: hidden;
 }
 
+.project-item:hover .project-image-container {
+    opacity: 1;
+}
+
+.project-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.projects-btn {
+    display: block;
+    font-family: metropolis;
+    font-size: 1rem;
+    color: #000;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    position: relative;
+    margin: 40px auto 0;
+    padding: 12px 24px;
+    border: 2px solid #000;
+    border-radius: 50px;
+    background-color: transparent;
+    transition: all 0.4s ease;
+    overflow: hidden;
+    z-index: 1;
+    width: fit-content;
+}
+
+.projects-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: -1;
+}
+
+.projects-btn:hover {
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.projects-btn:hover::before {
+    opacity: 1;
+}
+
+.projects-btn:active {
+    transform: translateY(0);
+}
+}
 .contact-section {
     padding: 120px 0;
     background-color: #ffffff;

@@ -103,10 +103,10 @@ document.addEventListener('DOMContentLoaded', function() {
             onLeaveBack: () => navbar.classList.remove('dark')
         });
         
-        // Hero title animation
-        gsap.from('.hero-title', {
+        // About title animation
+        gsap.from('.about-title', {
             scrollTrigger: {
-                trigger: '.hero-section',
+                trigger: '.about-section',
                 start: 'top 80%',
                 end: 'bottom 20%',
                 toggleActions: 'play none none reverse'
@@ -117,10 +117,10 @@ document.addEventListener('DOMContentLoaded', function() {
             ease: 'power3.out'
         });
         
-        // Hero description animation
-        gsap.from('.hero-description', {
+        // About description animation
+        gsap.from('.about-description', {
             scrollTrigger: {
-                trigger: '.hero-section',
+                trigger: '.about-section',
                 start: 'top 80%',
                 end: 'bottom 20%',
                 toggleActions: 'play none none reverse'
@@ -132,10 +132,10 @@ document.addEventListener('DOMContentLoaded', function() {
             ease: 'power3.out'
         });
         
-        // Hero bottom section (name and subtitle)
-        gsap.from('.hero-name', {
+        // About bottom section (name and information)
+        gsap.from('.about-tags', {
             scrollTrigger: {
-                trigger: '.hero-section',
+                trigger: '.about-section',
                 start: 'top 80%',
                 end: 'bottom 20%',
                 toggleActions: 'play none none reverse'
@@ -143,13 +143,27 @@ document.addEventListener('DOMContentLoaded', function() {
             y: 30,
             opacity: 0,
             duration: 0.8,
-            delay: 0.5,
+            delay: 0.6,
             ease: 'power2.out'
         });
         
-        gsap.from('.hero-subtitle', {
+        // Projects button animation
+        gsap.from('.projects-btn', {
             scrollTrigger: {
-                trigger: '.hero-section',
+                trigger: '.work-section',
+                start: 'top 80%',
+                toggleActions: 'play none none reverse'
+            },
+            y: 30,
+            opacity: 0,
+            duration: 1,
+            delay: 0.8,
+            ease: 'power2.out'
+        });
+        
+        gsap.from('.about-information', {
+            scrollTrigger: {
+                trigger: '.about-section',
                 start: 'top 80%',
                 end: 'bottom 20%',
                 toggleActions: 'play none none reverse'
