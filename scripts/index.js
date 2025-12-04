@@ -11,20 +11,23 @@ document.addEventListener('DOMContentLoaded', function() {
     gsap.set('.mobile-menu-overlay', { y: '-100%', pointerEvents: 'none' });
     
     function initLoader() {
-        const letters = document.querySelectorAll('.loader-letter');
-        const isMobile = window.innerWidth <= 768;
+        const fillRect = document.getElementById('loader-fill-rect');
+        const progressFill = document.querySelector('.loader-progress-fill');
+        const loaderContent = document.querySelector('.loader-content');
         
         const loaderTl = gsap.timeline({
             onComplete: () => {
-                gsap.to('.loader-letter', {
-                    x: isMobile ? '100%' : '0%',
-                    y: isMobile ? '0%' : '100%',
-                    duration: 0.7,
-                    stagger: {
-                        each: 0.08,
-                        from: 'start'
-                    },
-                    ease: 'power3.inOut',
+                gsap.to('.loader-content', {
+                    opacity: 0,
+                    scale: 0.95,
+                    duration: 0.6,
+                    ease: 'power2.inOut'
+                });
+                gsap.to('.loader', {
+                    opacity: 0,
+                    duration: 0.6,
+                    delay: 0.2,
+                    ease: 'power2.inOut',
                     onComplete: () => {
                         document.querySelector('.loader').style.display = 'none';
                         initAnimations();
@@ -33,26 +36,27 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
         
-        loaderTl.to('.loader-letter', {
-            x: isMobile ? '0%' : '0%',
-            y: isMobile ? '0%' : '0%',
+        // Fade in en scale up van de content
+        loaderTl.to(loaderContent, {
+            opacity: 1,
+            scale: 1,
             duration: 0.8,
-            stagger: {
-                each: 0.1,
-                from: 'start'
-            },
             ease: 'power3.out'
         })
-        .to('.loader-letter', {
-            opacity: 1,
-            duration: 0.6,
-            stagger: {
-                each: 0.08,
-                from: 'start'
-            },
-            ease: 'power2.out'
-        }, '-=0.6')
-        .to({}, { duration: 0.8 });
+        // Kleine pauze
+        .to({}, { duration: 0.2 })
+        // Logo fill en progress bar animatie
+        .to(fillRect, {
+            attr: { y: 0, height: 188 },
+            duration: 2.5,
+            ease: 'power2.inOut',
+            onUpdate: function() {
+                const progress = this.progress() * 100;
+                progressFill.style.width = progress + '%';
+            }
+        })
+        // Pauze voor voltooiing
+        .to({}, { duration: 0.4 });
     }
     
     function initAnimations() {

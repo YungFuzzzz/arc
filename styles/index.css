@@ -35,70 +35,76 @@ body {
 }
 
 .loader-content {
-    width: 100%;
-    height: 100%;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-}
-
-.loader-text {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    font-family: 'Metropolis';
-    font-weight: 700;
-}
-
-.loader-letter {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18vw;
+    gap: 60px;
     opacity: 0;
-    transform: translateY(100%);
-    background-color: #000;
-    color: #fff;
-    position: relative;
-    border-right: 2px solid #fff;
+    transform: scale(0.8);
 }
 
-.loader-letter:last-child {
-    border-right: none;
+.loader-logo {
+    width: 200px;
+    height: 200px;
 }
 
-.loader-letter::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
+#loader-fill-rect {
+    transition: none;
+}
+
+.loader-progress-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
+}
+
+.loader-progress-bar {
     width: 100%;
-    height: 0%;
-    background-color: #000;
-    z-index: -1;
+    height: 2px;
+    background-color: rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.loader-progress-fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0%;
+    background-color: #fff;
+    transition: none;
 }
 
 @media (max-width: 768px) {
-    .loader-text {
-        flex-direction: column;
+    .loader-content {
+        gap: 50px;
     }
     
-    .loader-letter {
-        font-size: 12vh;
-        border-right: none;
-        border-bottom: 2px solid #fff;
-        transform: translateX(-100%);
+    .loader-logo {
+        width: 150px;
+        height: 150px;
     }
     
-    .loader-letter:last-child {
-        border-bottom: none;
+    .loader-progress-container {
+        width: 250px;
     }
 }
 
 @media (max-width: 480px) {
-    .loader-letter {
-        font-size: 10vh;
+    .loader-content {
+        gap: 40px;
+    }
+    
+    .loader-logo {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .loader-progress-container {
+        width: 200px;
     }
 }
 
